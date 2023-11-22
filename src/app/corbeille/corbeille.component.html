@@ -1,1 +1,96 @@
-<p>corbeille works!</p>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap d-md-flex">
+                    <div class="img" style="background-image: url(https://img.freepik.com/photos-premium/sa-joie-brille-interieur-photo-jeune-femme-affaires-faisant-pause-dans-son-bureau_590464-2170.jpg?w=900);">
+                    </div>
+                    <div class="login-wrap p-4 p-md-5">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <h3 class="mb-4">Connexion</h3>
+                            </div>
+                            <div class="w-100">
+                                <p class="social-media d-flex justify-content-end">
+                                    <a href="#"
+                                        class="social-icon d-flex align-items-center justify-content-center"><span
+                                            class="fa fa-facebook"></span></a>
+                                    <a href="#"
+                                        class="social-icon d-flex align-items-center justify-content-center"><span
+                                            class="fa fa-twitter"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <form action="#" class="signin-form">
+                            <div class="form-group mb-3">
+                                <label class="label" for="name">Email</label>
+                                <input type="text" class="form-control" placeholder="Email" required name="email" [(ngModel)]="email">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">Mot de passe</label>
+                                <input type="password" class="form-control" placeholder="mot de passe" required name="password" [(ngModel)]="password">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary rounded submit px-3 fw-bold " (click)="login()">Connexion</button>
+                            </div>
+                        </form>
+                        <p class="text-end">Avez-vous un compte? <a data-toggle="tab" (click)="ShowForm()">S'inscrire</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section" *ngIf="formChoice">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="wrap d-md-flex">
+                    <div class="img"
+                        style="background-image: url(https://img.freepik.com/photos-premium/sa-joie-brille-interieur-photo-jeune-femme-affaires-faisant-pause-dans-son-bureau_590464-2170.jpg?w=900);">
+                    </div>
+                    <div class="login-wrap p-4 p-md-5">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <h3 class="mb-4">Inscription</h3>
+                            </div>
+                            <div class="w-100">
+                                <p class="social-media d-flex justify-content-end">
+                                    <a href="#"
+                                        class="social-icon d-flex align-items-center justify-content-center"><span
+                                            class="fa fa-facebook"></span></a>
+                                    <a href="#"
+                                        class="social-icon d-flex align-items-center justify-content-center"><span
+                                            class="fa fa-twitter"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <form action="#" class="signin-form">
+                            <div class="form-group mb-3">
+                                <label class="label" for="nom">Nom</label>
+                                <input type="text" class="form-control" placeholder="Nom" required name="nom" [(ngModel)]="nom">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="prenom">Prenom</label>
+                                <input type="text" class="form-control" placeholder="Prenom" required name="prenom" [(ngModel)]="prenom">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="email">Email</label>
+                                <input type="text" class="form-control" placeholder="Email" required name="email" [(ngModel)]="email">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="label" for="password">Mot de passe</label>
+                                <input type="password" class="form-control" placeholder="mot de passe" required name="password" [(ngModel)]="password">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit"
+                                    class="form-control btn btn-primary rounded submit px-3 fw-bold " (click)="inscription()">S'incrire</button>
+                            </div>
+                        </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

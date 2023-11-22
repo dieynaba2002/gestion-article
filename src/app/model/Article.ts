@@ -1,8 +1,8 @@
 export class Article{
     id?: number;
-    title?: string;
-    body?: string;
+    titre?: string;
+    description?: string;
     userId?: number;
     imageUrl?: string; 
-    createdById?: number;
+    createdBy?: number;
 }
