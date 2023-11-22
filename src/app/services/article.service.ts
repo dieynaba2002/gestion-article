@@ -12,12 +12,15 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-   getArticles(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/posts?_limit=2`);
-   }
-  getUser(): Observable<any[]> { 
-    return this.http.get<any[]>(`${this.url}/users?_limit=2`);
+  getArticles(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/posts`);
   }
+  getUser(): Observable<any[]> { 
+    return this.http.get<any[]>(`${this.url}/users`);
+  }
+
+
+  
 
   // Fonction pour afficher un sweetalert 
   verifInfos(title: any, text: any, icon: any) {
