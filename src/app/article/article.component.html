@@ -1,0 +1,162 @@
+<!-- header -->
+<nav class="navbar bg-body-tertiary fixed-top shadow-sm ">
+    <div class="container-fluid">
+        <img src="assets/images/logo.png" alt=""  class="logo">
+        <button class="navbar-toggler btn-toggle text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon text-white"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex mt-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+<br>
+<!-- titre -->
+<h1 class="text-center mt-5 text-dark py-5 ">📝Liste des articles</h1>
+<!-- card bootstrap -->
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-5">
+        <div class="col-md-6">
+            <!-- boutton ajouter et corbeille -->
+            <button type="button" class="btn text-white mb-5 fw-bold btn-article"  data-bs-toggle="modal" data-bs-target="#modalAjoutArticle">Ajouter</button>
+            <button type="button" class="btn ms-3 mb-5 text-white fw-bold btn-corbeille">Corbeille</button>
+        </div>
+        <div class="input-group">
+            <input type="text" name="filterValue" class="form-control">
+            <button class="input-group-text notactive"><i class="bi bi-search"></i></button>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5" *ngFor="let article of articles">
+        <div class="col">
+            <div class="card shadow-sm">
+                <img src="https://img.freepik.com/photos-gratuite/belle-jeune-femme-se-promene-dans-paris-concept-photo-voyage-heureuse_1321-3494.jpg" alt="Description de l'image" class="img-article">
+
+                <div class="card-body">
+                    <p class="card-text">{{article.body}}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
+                            <button type="button" class="btn btn-sm btn-outline-info">Modifier</button>
+                        </div>
+                        <small class="text-muted">9 mins</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                    role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                        dy=".3em">Thumbnail</text>
+                </svg>
+    
+                <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        </div>
+                        <small class="text-muted">9 mins</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                    role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                        dy=".3em">Thumbnail</text>
+                </svg>
+    
+                <div class="card-body">
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        </div>
+                        <small class="text-muted">9 mins</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" tabindex="-1"  id="modalAjoutArticle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter un article</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-4">
+                        <label for="inputImage" class="form-label fw-bold">Image</label>
+                        <input type="text" name="image" class="form-control" id="inputImage" placeholder="Entrez l'url d'une image">
+                    </div>
+                    <div class="mb-4">
+                        <label for="inputTitre" class="form-label fw-bold">Titre</label>
+                        <input type="text" name="titre" class="form-control" id="inputTitre" placeholder="Entrez le titre">
+                    </div>
+                    <div class="mb-4">
+                        <label for="inputDescription" class="form-label fw-bold">Description</label>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="description" name="description" id="description"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-corbeille  text-white" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-article text-white ">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer mt-auto py-3 mt-5">
+    <div class="container text-center">
+        <span class="text-light">Copyrights © 2023 powered by G-10. All Rights Reserved.</span>
+    </div>
+</footer>

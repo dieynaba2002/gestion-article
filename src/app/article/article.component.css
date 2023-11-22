@@ -1,0 +1,15 @@
+.logo{
+    height:95px;
+    width: 190px;
+}
+.btn-corbeille{
+    background-color: #FF9A9A;
+}
+.btn-article,.btn-toggle,.footer{
+    background-color: #0097b2;
+    color: white;
+    font-weight: bold;
+}
+.img-article{
+    height: 225px;
+}
