@@ -29,7 +29,7 @@
             <button type="button" class="btn ms-3 mb-5 text-white fw-bold btn-corbeille">Corbeille</button>
         </div>
         <div class="input-group">
-            <input type="text" name="filterValue" class="form-control">
+            <input type="text" name="searchArticle" class="form-control" (input)="articleFound()" [(ngModel)]="searchArticle">
             <button class="input-group-text notactive"><i class="bi bi-search"></i></button>
         </div>
     </div>
@@ -44,9 +44,9 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-info">Détail</button>
-                            <button type="button" class="btn btn-sm btn-outline-info">Modifier</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalModifierArticle">Modifier</button>
                         </div>
-                        <button class="btn btn btn-sm btn-outline btn-sup" (click)="supprimerArticle(article)">supprimer</button>
+                        <button class="btn btn btn-sm btn-outline btn-sup" (click)="deleteArticle(article.id)">supprimer</button>
                     </div>
                 </div>
             </div>
@@ -55,19 +55,19 @@
 </div>
 
 <div class="d-flex justify-content-center my-5">
-    <button class="btn btnColor me-2" [disabled]="pageActuelle === 1" (click)="pageActuelle = pageActuelle - 1">
+    <button class="btn btnColor me-2 pagination-button" [disabled]="pageActuelle === 1" (click)="pageActuelle = pageActuelle - 1">
         Précédent
     </button>
-    <button class="btn btnColor ms-2" *ngFor="let page of pages" (click)="pageActuelle = page">
+    <button class="btn btnColor ms-2 pagination-button" *ngFor="let page of pages" (click)="pageActuelle = page" [class.active]="page === pageActuelle">
         {{ page }}
     </button>
-    <button class="btn btnColor ms-2" [disabled]="pageActuelle === totalPages"
+    <button class="btn btnColor ms-2 pagination-button" [disabled]="pageActuelle === totalPages"
         (click)="pageActuelle = pageActuelle + 1">
         Suivant
     </button>
 </div>
 
-<!-- Modal -->
+<!-- Modal ajout -->
 <div class="modal" tabindex="-1"  id="modalAjoutArticle">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -95,7 +95,44 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-corbeille  text-white" data-bs-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-article text-white" (click)="ajouterArticle()">Ajouter</button>
+                <button type="button" class="btn btn-article text-white" (click)=" ajouterArticle()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal modification -->
+<div class="modal" tabindex="-1" id="modalModifierArticle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier un article</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-4">
+                        <label for="inputImage" class="form-label fw-bold">Image</label>
+                        <input type="text" name="imageUrl" class="form-control" id="inputImage"
+                            placeholder="Entrez l'url d'une image" [(ngModel)]="imageUrl">
+                    </div>
+                    <div class="mb-4">
+                        <label for="inputTitre" class="form-label fw-bold">Titre</label>
+                        <input type="text" name="titre" class="form-control" id="inputTitre"
+                            placeholder="Entrez le titre" [(ngModel)]="title">
+                    </div>
+                    <div class="mb-4">
+                        <label for="inputDescription" class="form-label fw-bold">Description</label>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="description" name="description" id="description"
+                                [(ngModel)]="body"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-corbeille  text-white" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-article text-white" (click)=" ajouterArticle()">Ajouter</button>
             </div>
         </div>
     </div>

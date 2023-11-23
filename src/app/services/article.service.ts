@@ -20,6 +20,11 @@ export class ArticleService {
     return this.http.get<any[]>(`${this.url}/users?`);
   }
 
+   // Méthode pour supprimer un article 
+  deleteArticle(articleId: any): Observable<any> {
+    return this.http.delete(`https://jsonplaceholder.typicode.com/posts/${articleId}`);
+  }
+
   // Fonction pour afficher un sweetalert 
   verifInfos(title: any, text: any, icon: any) {
     Swal.fire({
