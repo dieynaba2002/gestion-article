@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import { UtilisateurService } from '../services/utilisateur.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-article',
@@ -23,9 +24,9 @@ export class ArticleComponent implements OnInit {
   tabUsers: any;
   userFound: any;
   articlesUserFound: any;
-  
 
-  // Article trouvé  
+
+  // Article trouvé
   articleUserFound: any;
 
   constructor(private article: ArticleService, private utilisateurService: UtilisateurService, private route: ActivatedRoute) { }
@@ -52,13 +53,15 @@ export class ArticleComponent implements OnInit {
     this.articleUserFound = this.userFound.articles;
     console.log(this.articleUserFound);
 
+
+
   }
 
   ajouterArticle() {
     if (this.imageUrl == "" || this.titre == "" || this.description == "") {
       this.article.verifInfos("Erreur!", "Veuillez remplir les champs", "error");
     } else {
-      // On récupère le dernier element du tableau  
+      // On récupère le dernier element du tableau
       let articleUser = {
         idArticle: this.userFound.articles.length + 1,
         titreArticle: this.titre,
@@ -69,15 +72,44 @@ export class ArticleComponent implements OnInit {
       }
       this.userFound.articles.push(articleUser);
       console.log(this.userFound);
-  
+
       console.log(this.tabUsers);
-  
+
       localStorage.setItem("articleUsers", JSON.stringify(this.tabUsers));
     }
-          
+
+
   }
 
-  // Methode pour uploader le fichier image 
+  // modifier les article
+
+
+  showMessage(icon: any, message: any) {
+    Swal.fire({
+      icon: icon,
+      title: message
+    });
+  }
+
+  // la methode qui sera appeler lorsqu'o, appuis le button
+
+  @Component({
+    // ... autres métadonnées du composant
+    templateUrl: './votre-composant.component.html',
+    styleUrls: ['./votre-composant.component.css']
+  })
+
+
+  modifierArticle(){
+    if (this.imageUrl == "" || this.titre == "" || this.description== "") {
+      this.showMessage('error', 'Veuillez remplir tout les champs');
+    } else {
+
+    }
+  }
+
+
+  // Methode pour uploader le fichier image
   uploadFile(event: Event) {
     const element = event.currentTarget as HTMLInputElement;
     let fileList: FileList | null = element.files;
