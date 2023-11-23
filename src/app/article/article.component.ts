@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import { UtilisateurService } from '../services/utilisateur.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-article',
@@ -28,7 +28,7 @@ export class ArticleComponent implements OnInit {
   // Article trouvé  
   articleUserFound: any;
 
-  constructor(private article: ArticleService, private utilisateurService: UtilisateurService, private route: ActivatedRoute) { }
+  constructor(private article: ArticleService, private utilisateurService: UtilisateurService, private route: ActivatedRoute , private router: Router) { }
 
   ngOnInit(): void {
 
@@ -91,6 +91,12 @@ export class ArticleComponent implements OnInit {
         }
       }
     }
+  }
+  getIdArticles(id:number | string) {
+    let idRecup: string = id as string
+    console.log(id);
+    localStorage.setItem("id",idRecup)
+    this.router.navigateByUrl("/details-article")
   }
 
 }
