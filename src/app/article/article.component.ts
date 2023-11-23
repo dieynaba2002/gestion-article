@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import { UtilisateurService } from '../services/utilisateur.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-article',
@@ -10,19 +11,27 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ArticleComponent implements OnInit {
 
-  articles: any[] = [];
+  articles: any;
   // tableau pour les utilisateurs
   users: any[] = [];
+  tabTotal: any = []; 
+
+  // Ajoutez ces propriétés en haut de votre composant
+  pageActuelle: number = 1;
+  articlesParPage: number = 6;
+
 
   // attributs
   imageUrl: string = "";
-  titre: string = "";
-  description: string = "";
+  title: string = "";
+  body: string = "";
 
   idArticleUser = 0;
   tabUsers: any;
   userFound: any;
   articlesUserFound: any;
+  
+  tabArticle: any[] = [];
   
 
   // Article trouvé  
@@ -35,49 +44,127 @@ export class ArticleComponent implements OnInit {
     this.article.getArticles().subscribe((data) => {
       console.log(data);
       this.articles = data;
+      this.filtrerArticle();
     });
 
     this.utilisateurService.getUsers().subscribe((data) => {
       this.users = data;
     });
+    
 
     // On essaie de récupérer l'ID qui se trouve dans l'URL
-    this.idArticleUser = +this.route.snapshot.params['id'];
+    this.idArticleUser = this.route.snapshot.params['id'];
     console.log(this.idArticleUser);
 
     // ajout dans le local storage
     this.tabUsers = JSON.parse(localStorage.getItem("articleUsers") || '[]');
+    
 
     this.userFound = this.tabUsers.find((element: any) => element.idUser == this.idArticleUser);
     this.articleUserFound = this.userFound.articles;
     console.log(this.articleUserFound);
-
+    
   }
+
+  filtrerArticle() {
+    this.articles.forEach((element:any) => {
+      if (element.userId === this.idArticleUser) {
+        this.tabArticle.push(element);
+        console.log(this.tabArticle, 'article');
+      }
+    });
+  }
+ 
+
+
+  // ajouterArticle() {
+  //   console.log("ok");
+  //   if (this.imageUrl == "" || this.title == "" || this.body == "") {
+  //     this.article.verifInfos("Erreur!", "Veuillez remplir les champs", "error");
+  //   } else {
+  //     // On récupère le dernier element du tableau
+  //     let articleUser = {
+  //       idArticle: this.userFound.articles.length + 1,
+  //       title: this.title,
+  //       body: this.body,
+  //       imageUrl: this.imageUrl,
+  //       etatArticle: 1,
+  //       createdAt: new Date(),
+  //       createdBy: this.userFound.email
+  //     }
+  //     this.userFound.articles.push(articleUser);
+  //     console.log(this.userFound);
+  
+  //     console.log(this.tabUsers);
+  
+  //     localStorage.setItem("articleUsers", JSON.stringify(this.tabUsers));
+  //     this.article.verifInfos("Succes", "Article ajoute avec success", "success");
+
+  //     let articlesTmp = JSON.parse(localStorage.getItem('articleUsers') || '[]');
+  //     articlesTmp.push(articleUser);
+  //     localStorage.setItem('articleUsers', JSON.stringify(articlesTmp));
+  //     console.log('temp', {articlesTmp});
+  //     this.filtrerArticle();
+  //   }
+          
+  // }
+
+  // Methode pour uploader le fichier image
 
   ajouterArticle() {
-    if (this.imageUrl == "" || this.titre == "" || this.description == "") {
-      this.article.verifInfos("Erreur!", "Veuillez remplir les champs", "error");
-    } else {
-      // On récupère le dernier element du tableau  
-      let articleUser = {
-        idArticle: this.userFound.articles.length + 1,
-        titreArticle: this.titre,
-        descriptionArticle: this.description,
-        etatArticle: 1,
-        createdAt: new Date(),
-        createdBy: this.userFound.email
+  if (this.imageUrl == "" || this.title == "" || this.body == "") {
+    this.article.verifInfos("Erreur!", "Veuillez remplir les champs", "error");
+  } else {
+    let tabTotal = JSON.parse(localStorage.getItem("articleUsers") || '[]');
+    let articleUser = {
+      idArticle: this.userFound.articles.length + 1,
+      title: this.title,
+      body: this.body,
+      imageUrl: this.imageUrl,
+      etatArticle: 1,
+      createdAt: new Date(),
+      createdBy: this.userFound.email
+    };
+    
+    tabTotal.push(articleUser);
+    localStorage.setItem("articleUsers", JSON.stringify(this.tabTotal));
+
+    // this.userFound.articles.push(articleUser);
+    // mettre a jour le tableau 
+    this.articles = [...this.articles, articleUser];
+
+    console.log(this.userFound);
+
+    // Mise à jour du localStorage
+    // localStorage.setItem("articleUsers", JSON.stringify(this.tabUsers));
+
+    this.article.verifInfos("Succes", "Article ajouté avec succès", "success");
+
+    this.filtrerArticle();
+  }
+  }
+  // methode qui permet de supprimer
+   supprimerArticle(paramArticle:any){
+    Swal.fire({
+      title: "Etes-vous sur???",
+      text: "Vous allez supprimer le Article",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#0097b2",
+      cancelButtonColor: "#FF9A9A",
+      confirmButtonText: "Oui, je supprime!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        paramArticle.etatArticle = 0;
+        // On met à jour le tableau qui est stocké dans le localStorage 
+        localStorage.setItem("articleUsers", JSON.stringify(this.tabUsers));
+        this.article.verifInfos("Article supprimer!", "", "success");     
+        
       }
-      this.userFound.articles.push(articleUser);
-      console.log(this.userFound);
-  
-      console.log(this.tabUsers);
-  
-      localStorage.setItem("articleUsers", JSON.stringify(this.tabUsers));
-    }
-          
+    }); 
   }
 
-  // Methode pour uploader le fichier image 
+  // Methode pour uploader l'image
   uploadFile(event: Event) {
     const element = event.currentTarget as HTMLInputElement;
     let fileList: FileList | null = element.files;
@@ -91,6 +178,23 @@ export class ArticleComponent implements OnInit {
         }
       }
     }
+  }
+
+   // Méthode pour déterminer les articles à afficher sur la page actuelle
+  getArticlesPage(): any[] {
+    const indexDebut = (this.pageActuelle - 1) * this.articlesParPage;
+    const indexFin = indexDebut + this.articlesParPage;
+    return this.articles.slice(indexDebut, indexFin);
+  }
+   // Méthode pour générer la liste des pages
+   get pages(): number[] {
+    const totalPages = Math.ceil(this.articles.length / this.articlesParPage);
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+
+  // Méthode pour obtenir le nombre total de pages
+  get totalPages(): number {
+    return Math.ceil(this.articles.length / this.articlesParPage);
   }
 
 }

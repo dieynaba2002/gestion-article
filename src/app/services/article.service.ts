@@ -12,11 +12,12 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-   getArticles(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/posts?_limit=2`);
+   getArticles() {
+    //  return this.http.get<any[]>(`${this.url}/posts?_limit=10`);
+     return this.http.get("https://jsonplaceholder.typicode.com/posts");
    }
   getUser(): Observable<any[]> { 
-    return this.http.get<any[]>(`${this.url}/users?_limit=2`);
+    return this.http.get<any[]>(`${this.url}/users?`);
   }
 
   // Fonction pour afficher un sweetalert 

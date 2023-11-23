@@ -5,4 +5,5 @@ export class Article{
     userId?: number;
     imageUrl?: string; 
     createdBy?: number;
+
 }
