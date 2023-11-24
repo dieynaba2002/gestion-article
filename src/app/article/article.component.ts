@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import { UtilisateurService } from '../services/utilisateur.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { from, mergeMap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-article',
@@ -16,6 +17,7 @@ export class ArticleComponent implements OnInit {
   // tableau pour les utilisateurs
   users: any[] = [];
   tabTotal: any = []; 
+  currentArticle: any;
 
   searchArticle: string = "";
   itemSearch: any;
@@ -41,7 +43,7 @@ export class ArticleComponent implements OnInit {
   // Article trouvé  
   articleUserFound: any;
 
-  constructor(private article: ArticleService, private utilisateurService: UtilisateurService, private route: ActivatedRoute) { }
+  constructor(private article: ArticleService, private utilisateurService: UtilisateurService, private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -77,6 +79,13 @@ export class ArticleComponent implements OnInit {
         console.log(this.tabArticle, 'article');
       }
     });
+  }
+
+  getIdArticles(id:number | string) {
+    let idRecup: string = id as string
+    console.log(id);
+    localStorage.setItem("id", idRecup);
+    this.router.navigateByUrl("/details-article");
   }
  
 
@@ -148,10 +157,7 @@ export class ArticleComponent implements OnInit {
   }
   }
 
-  // articleFound() {
-  //   this.itemSearch = this.articles.filter(
-  //     (item: any) => (item?.title.toLowerCase().includes(this.searchArticle.toLowerCase())));
-  // }
+ 
 
   articleFound() {
   if (this.searchArticle.trim() === '') {
@@ -230,6 +236,33 @@ export class ArticleComponent implements OnInit {
       // Supprimer l'article de la liste des articles
       this.articles = this.articles.filter((article: any) => article.id !== idArticle);
     });
+  }
+
+   // Methode pour charger les infos de l'article à modifier
+  chargerInfosArticle(paramArticle: any) {
+    this.currentArticle = paramArticle;
+    this.title = paramArticle.title;
+    this.body = paramArticle.body;
+  }
+
+  // Methode pour modifier l'article 
+ modifierArticle() {
+    const titre = this.currentArticle.title = this.title;
+    const body = this.currentArticle.body = this.body;
+    const urlArticle = `https://jsonplaceholder.typicode.com/posts/${this.currentArticle}`;
+    const putData = {
+      id: this.currentArticle,
+      title: titre,
+      body: body,
+      userId: this.currentArticle.userId,
+    }
+
+    this.http.put(urlArticle, putData)
+      .subscribe((response) => {
+        console.log(response);
+        return response;
+      });
+    
   }
 
    // Méthode pour déterminer les articles à afficher sur la page actuelle

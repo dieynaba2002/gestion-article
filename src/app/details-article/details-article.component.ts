@@ -27,17 +27,29 @@ export class DetailsArticleComponent {
   userFound: any;
   articlesUserFound: any;
   idArticle: any;
-  articleFound:any
+  articleFound: any
+  
+  recupComment: any;
+  articleDetailsComments: any[] = [];
 
-  constructor(public article: ArticleService, private route: ActivatedRoute) { }
+  constructor(public article: ArticleService, private route: ActivatedRoute, private http: HttpClient) { }
 
 
   ngOnInit(): void{
     this.getAllArticles()
     this.idArticle = localStorage.getItem("id")
     console.log(this.idArticle);
+
+     // Appel pour récupérer les commentaires de l'article spécifique
+      this.article.getCommentsByArticleID(this.idArticle).subscribe((comments: any[]) => {
+        console.log('Commentaires récupérés :', comments);
+        this.articleDetailsComments = comments; 
+      })
+    this.articleFound = {};
   
   }
+
+  
   getAllArticles(){
     this.article.getDetailsArticle().subscribe((data) => {
       this.articles = data;
@@ -47,5 +59,6 @@ export class DetailsArticleComponent {
     });
   
   }
+  
   
 }

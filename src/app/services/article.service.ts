@@ -25,6 +25,17 @@ export class ArticleService {
     return this.http.delete(`https://jsonplaceholder.typicode.com/posts/${articleId}`);
   }
 
+  getDetailsArticle(): Observable<any[]> { 
+    return this.http.get<any[]>(`${this.url}/posts`);
+  }
+
+  // Méthode pour récupérer les commentaire d'un article 
+  getCommentsByArticleID(articleID: number): Observable<any[]> {
+    // Construire l'URL avec l'id de l'article
+    const url = `${this.url}/${articleID}/comments`; 
+    return this.http.get<any[]>(url);
+  }
+
   // Fonction pour afficher un sweetalert 
   verifInfos(title: any, text: any, icon: any) {
     Swal.fire({
