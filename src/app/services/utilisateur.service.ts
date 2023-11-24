@@ -11,7 +11,7 @@ export class UtilisateurService {
 
   constructor(private http: HttpClient) { }
 
-   
+  
   getUsers(): Observable<any[]> { 
     return this.http.get<any[]>(`${this.url}/users?_limit=2`);
   }
