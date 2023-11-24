@@ -32,10 +32,9 @@
             <input type="text" name="filterValue" class="form-control">
             <button class="input-group-text notactive"><i class="bi bi-search"></i></button>
         </div>
-    </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5" *ngFor="let article of articles">
+    </div> <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5">
         <div class="col">
-            <div class="card shadow-sm">
+            <div class="card shadow-sm" *ngFor="let article of articles">
                 <img src="https://img.freepik.com/photos-gratuite/belle-jeune-femme-se-promene-dans-paris-concept-photo-voyage-heureuse_1321-3494.jpg" alt="Description de l'image" class="img-article">
 
                 <div class="card-body">
@@ -43,14 +42,14 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
-                            <button type="button" class="btn btn-sm btn-outline-info"  data-bs-toggle="modal" data-bs-target="#modalModifierArticle">Modifier</button>
+                            <button type="button" class="btn btn-sm btn-outline-info"  data-bs-toggle="modal" data-bs-target="#modalModifierArticle"(click)="recupereArticleAmodifier(article.id)">Modifier</button>
                         </div>
                         <small class="text-muted">{{article.userId}}</small>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <div class="card shadow-sm">
                 <img src="https://img.freepik.com/photos-gratuite/belle-jeune-femme-se-promene-dans-paris-concept-photo-voyage-heureuse_1321-3494.jpg"
                     alt="Description de l'image" class="img-article">
@@ -60,7 +59,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
-                            <button type="button" class="btn btn-sm btn-outline-info">Modifier</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalModifierArticle" (click)="modifierArticle(article.id)">Modifier</button>
                         </div>
                         <small class="text-muted">9 mins</small>
                     </div>
@@ -77,13 +76,13 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
-                            <button type="button" class="btn btn-sm btn-outline-info">Modifier</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalModifierArticle" (click)="modifierArticle(article.id)">Modifier</button>
                         </div>
                         <small class="text-muted">9 mins</small>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -130,10 +129,6 @@
       <div class="modal-body">
         <form>
           <div class="mb-4">
-            <label for="inputImage" class="form-label fw-bold">Image</label>
-            <input type="text" name="imageUrl" class="form-control" id="inputImage" placeholder="Entrez l'url d'une image" [(ngModel)]="imageUrl">
-          </div>
-          <div class="mb-4">
             <label for="inputTitre" class="form-label fw-bold">Titre</label>
             <input type="text" name="titre" class="form-control" id="inputTitre" placeholder="Entrez le titre" [(ngModel)]="titre">
           </div>
@@ -147,7 +142,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-corbeille text-white" data-bs-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-article text-white" (click)="modifierArticle()">Modifier</button>
+        <button type="button" class="btn btn-article text-white" (click)="ModifierArticle()">Modifier</button>
       </div>
     </div>
   </div>

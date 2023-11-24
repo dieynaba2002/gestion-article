@@ -14,7 +14,6 @@ export class ArticleComponent implements OnInit {
   articles: any[] = [];
   // tableau pour les utilisateurs
   users: any[] = [];
-
   // attributs
   imageUrl: string = "";
   titre: string = "";
@@ -24,7 +23,7 @@ export class ArticleComponent implements OnInit {
   tabUsers: any;
   userFound: any;
   articlesUserFound: any;
-
+  currentArticle: any
 
   // Article trouvé
   articleUserFound: any;
@@ -34,7 +33,6 @@ export class ArticleComponent implements OnInit {
   ngOnInit(): void {
 
     this.article.getArticles().subscribe((data) => {
-      console.log(data);
       this.articles = data;
     });
 
@@ -44,19 +42,12 @@ export class ArticleComponent implements OnInit {
 
     // On essaie de récupérer l'ID qui se trouve dans l'URL
     this.idArticleUser = +this.route.snapshot.params['id'];
-    console.log(this.idArticleUser);
-
     // ajout dans le local storage
     this.tabUsers = JSON.parse(localStorage.getItem("articleUsers") || '[]');
 
     this.userFound = this.tabUsers.find((element: any) => element.idUser == this.idArticleUser);
     this.articleUserFound = this.userFound.articles;
-    console.log(this.articleUserFound);
-
-
-
   }
-
   ajouterArticle() {
     if (this.imageUrl == "" || this.titre == "" || this.description == "") {
       this.article.verifInfos("Erreur!", "Veuillez remplir les champs", "error");
@@ -71,19 +62,10 @@ export class ArticleComponent implements OnInit {
         createdBy: this.userFound.email
       }
       this.userFound.articles.push(articleUser);
-      console.log(this.userFound);
-
-      console.log(this.tabUsers);
-
       localStorage.setItem("articleUsers", JSON.stringify(this.tabUsers));
     }
-
-
   }
-
   // modifier les article
-
-
   showMessage(icon: any, message: any) {
     Swal.fire({
       icon: icon,
@@ -91,23 +73,24 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  // la methode qui sera appeler lorsqu'o, appuis le button
+  recupereArticleAmodifier(id:any){
+    this.currentArticle = this.articles.find((elt: any) => elt.id === id)
+    // return console.log(this.currentArticle)
 
-  @Component({
-    // ... autres métadonnées du composant
-    templateUrl: './votre-composant.component.html',
-    styleUrls: ['./votre-composant.component.css']
-  })
+    this.titre = this.currentArticle.title;
+    this.description = this.currentArticle.body
+  }
 
-
-  modifierArticle(){
-    if (this.imageUrl == "" || this.titre == "" || this.description== "") {
-      this.showMessage('error', 'Veuillez remplir tout les champs');
+  ModifierArticle(){
+    if (this.titre == "" || this.description == "") {
+      this.article.verifInfos("Erreur!", "Veuillez remplir les champs", "error");
     } else {
+      // On récupère le dernier element du tableau
+      this.currentArticle.title = this.titre;
+      this.currentArticle.body = this.description;
 
     }
   }
-
 
   // Methode pour uploader le fichier image
   uploadFile(event: Event) {
@@ -124,5 +107,8 @@ export class ArticleComponent implements OnInit {
       }
     }
   }
+
+
+
 
 }
